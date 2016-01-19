@@ -1,0 +1,61 @@
+plugins {
+    id "nebula.ospackage" version "3.3.0"
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'nebula.ospackage'
+
+version = '1.0.1'
+mainClassName = 'com.some.Main'
+applicationName = 'main'
+
+ospackage {
+    packageName 'main'
+    url 'some-url'
+    release '1'
+    os LINUX
+    arch NOARCH
+    vendor 'TheCompany <some@company.com>'
+    license 'Commercial'
+    packageGroup 'Some/Modules'
+    prefix '/some'
+
+    user 'root'
+    permissionGroup 'root'
+
+    preInstall file('src/scripts/rpm/preInstall.sh')
+    postInstall file('src/scripts/rpm/postInstall.sh')
+    preUninstall file('src/scripts/rpm/preUninstall.sh')
+    postUninstall file('src/scripts/rpm/postUninstall.sh')
+
+    requires('jdk', '1.8', GREATER | EQUAL)
+
+    into '/some/main'
+
+    from('etc') {
+        into 'etc'
+        expand([version: project.version])
+    }
+
+    from('build/install/some/lib') {
+        into 'lib'
+    }
+
+    from('build/install/some/bin') {
+        into 'bin'
+        exclude '*.bat'
+    }
+
+    from('src/scripts/etc/init.d') {
+        into '/etc/init.d'
+        fileMode 0755
+    }
+
+    from('src/scripts/etc/default') {
+        fileType CONFIG | NOREPLACE
+        fileMode 0644
+        into '/etc/default'
+    }
+}
+buildRpm.dependsOn installDist
