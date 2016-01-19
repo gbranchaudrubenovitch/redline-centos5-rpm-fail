@@ -9,26 +9,15 @@ and `rpm version 4.4.2.3` on a CentOS release 5.8 machine.
 
 ## Build & install the rpm
 1. `gradlew buildRpm`
-2. `yum install ./build/distributions/main-1.0.1-1.noarch.rpm`
+2. `rpm -vvqip  ./build/distributions/main-1.0.1-1.noarch.rpm`
 
-## What happens on my old Centos 5 machine
-    rpmts_HdrFromFdno: headerRead failed: Header sanity check: OK
-    Traceback (most recent call last):
-    File "/usr/bin/yum", line 29, in ?
-       yummain.user_main(sys.argv[1:], exit_code=True)
-    File "/usr/share/yum-cli/yummain.py", line 309, in user_main
-     errcode = main(args)
-    File "/usr/share/yum-cli/yummain.py", line 178, in main
-      result, resultmsgs = base.doCommands()
-    File "/usr/share/yum-cli/cli.py", line 349, in doCommands
-      return self.yum_cli_commands[self.basecmd].doCommand(self, self.basecmd, self.extcmds)
-    File "/usr/share/yum-cli/yumcommands.py", line 677, in doCommand
-      return base.localInstall(filelist=extcmds, updateonly=updateonly)
-    File "/usr/share/yum-cli/cli.py", line 717, in localInstall
-      txmbrs = self.installLocal(pkg, updateonly=updateonly)
-    File "/usr/lib/python2.4/site-packages/yum/__init__.py", line 3123, in installLocal
-      po = YumLocalPackage(ts=self.rpmdb.readOnlyTS(), filename=pkg)
-    File "/usr/lib/python2.4/site-packages/yum/packages.py", line 1568, in __init__
-      hdr = rpmUtils.miscutils.hdrFromPackage(ts, self.localpath)
-    File "/usr/lib/python2.4/site-packages/rpmUtils/miscutils.py", line 406, in hdrFromPackage
-      hdr = ts.hdrFromFdno(fdno)
+
+## Some outputs
+    []$ rpm --version
+    RPM version 4.4.2.3
+
+    []$ rpm -vvqip  ./build/distributions/main-1.0.1-1.noarch.rpm
+    D: Expected size:         5230 = lead(96)+sigs(180)+pad(4)+data(4950)
+    D:   Actual size:         5230
+    error: ./build/distributions/main-1.0.1-1.noarch.rpm: headerRead failed: Header sanity check: OK
+    D: May free Score board((nil))
