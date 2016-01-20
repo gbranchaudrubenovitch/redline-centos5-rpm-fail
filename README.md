@@ -4,6 +4,8 @@ showcase for issue with redline 1.2.2 on old rpm
 This is the simplest java app I could build that reproduces an issue we have with redline 1.2.2 (consumed through the nebula.ospackage gradle plugin)
 and `rpm version 4.4.2.3` on a CentOS release 5.8 machine.
 
+See [Redline Issue #97](https://github.com/craigwblake/redline/issues/97)
+
 ## Prerequisites
 1. Install Java 8
 
